@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+// import { useState } from 'react'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Board />
     </>
   )
 }
 
-export default App
+function Board() {
+
+  return (
+    <div className='board'>
+      <Row sqVal1='1' sqVal2='2' sqVal3='3' />
+      <Row sqVal1='4' sqVal2='5' sqVal3='6' />
+      <Row sqVal1='7' sqVal2='8' sqVal3='9' />
+    </div>
+  )
+}
+
+function Row({ sqVal1, sqVal2, sqVal3 }: { sqVal1: string, sqVal2: string, sqVal3: string }) {
+
+  return (
+    <div className='board-row'>
+      <Square value={sqVal1} />
+      <Square value={sqVal2} />
+      <Square value={sqVal3} />
+    </div>
+  )
+}
+
+function Square({ value }: { value: string }) {
+
+  function handleClick() {
+    console.log('Square ' + value + ' clicked!');
+  }
+  return (
+    <button className='sq' onClick={handleClick}>{value}</button>
+  )
+};
