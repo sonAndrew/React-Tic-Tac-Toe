@@ -1,4 +1,4 @@
-// import { useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 
 export default function App() {
@@ -14,30 +14,37 @@ function Board() {
 
   return (
     <div className='board'>
-      <Row sqVal1='1' sqVal2='2' sqVal3='3' />
-      <Row sqVal1='4' sqVal2='5' sqVal3='6' />
-      <Row sqVal1='7' sqVal2='8' sqVal3='9' />
+      <Row />
+      <Row />
+      <Row />
     </div>
   )
 }
 
-function Row({ sqVal1, sqVal2, sqVal3 }: { sqVal1: string, sqVal2: string, sqVal3: string }) {
-
+function Row() {
   return (
     <div className='board-row'>
-      <Square value={sqVal1} />
-      <Square value={sqVal2} />
-      <Square value={sqVal3} />
+      <Square />
+      <Square />
+      <Square />
     </div>
   )
 }
 
-function Square({ value }: { value: string }) {
+function Square() {
+  const [value, setValue] = useState("");
 
   function handleClick() {
-    console.log('Square ' + value + ' clicked!');
+    if (value === 'X') {
+      setValue("");
+    }
+    else {
+      setValue('X');
+    }
   }
   return (
-    <button className='sq' onClick={handleClick}>{value}</button>
+    <button type='button' id='btn' className='sq' onClick={handleClick}>
+      {value}
+    </button>
   )
 };
