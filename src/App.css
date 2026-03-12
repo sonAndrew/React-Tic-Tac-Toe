@@ -9,12 +9,38 @@ button:hover {
   border-color: #646cff;
 }
 
+.app {
+  display: flex;
+  flex-direction: row;
+  width: 500px;
+}
+
+.board,
+.history {
+  background-color: white;
+  border: 1px solid white;
+  width: 200px;
+  height: 200px;
+  padding: 15px;
+}
+
+.history {
+  margin-left: auto;
+  color: black
+}
+
+.history>h4 {
+  margin: 0px;
+  padding: 0px;
+  /* margin-top: -10px; */
+}
+
 .sq {
   background-color: white;
   color: black;
   background: #fff;
   border: 1px solid #999;
-  float: left;
+  float: right;
   font-size: 24px;
   font-weight: bold;
   line-height: 30px;
@@ -23,11 +49,17 @@ button:hover {
   height: 66px;
 }
 
+.players-container {
+  display: flex;
+  text-align: center;
+}
 
-.board {
-  background-color: white;
-  border: 1px solid white;
-  width: 200px;
-  height: 200px;
-  padding: 15px;
+.players-container>p {
+  flex-direction: row;
+  margin-left: 20px;
+}
+
+.history>p {
+  margin-top: -30px;
+  padding: 0px;
 }
