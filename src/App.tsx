@@ -1,82 +1,137 @@
-import { useState } from 'react'
+import { useState, type ReactNode } from 'react'
 import './App.css'
 
 export default function App() {
+  const p1: IPlayer = {
+    id: 1,
+    name: 'Obi-wan',
+    points: 0,
+  }
+  const p2: IPlayer = {
+    id: 2,
+    name: 'Anakin',
+    points: 0,
+  }
 
   return (
-    <div className='app'>
-      <Board />
-      <HistorySection />
-    </div>
+    <>
+      <PlayerForm />
+      <div className='app'>
+        <Board />
+        <HistorySection Player1={p1} Player2={p2} />
+      </div>
+    </>
   )
 }
 
 interface IPlayer {
+  id: number,
   name: string,
   points: number,
-  history: Array<string>
+  // history: Array<string>
 }
 
-function Player({ Player: IPlayer }) {
-  const [name, setName] = useState("");
-
-  function handleName() {
-    if (name === "") {
-      // Ooops! Need a Form to handle getting player data.
-    }
-  }
+function PlayerForm() {
+  const placeholderText = "Enter player name";
 
   return (
-    <p>{Player.name}</p>
+    <Form action='' rest='post'>
+      <Separator mTop='' mRight='268px' mBottom='' mLeft='' />
+      <p className='name'>
+        <Label htmlfor='name'>Player 1:</Label>
+        <input type='text' id='name' name='user_name' value={placeholderText} />
+      </p>
+      <Separator mTop='' mRight='30px' mBottom='' mLeft='15px' />
+      <p className='name'>
+        <Label htmlfor='name'>Player 2:</Label>
+        <input type='text' id='name' name='user_name' value={placeholderText} />
+      </p>
+    </Form>
   )
 }
 
-function HistorySection() {
+function PlayerHBox({ Player }: { Player: IPlayer }) {
+
+  return (
+    <div className='player'>
+      <p>Player {Player.id}: {Player.name}</p>
+      <p>____________________</p>
+      <History />
+    </div>
+  )
+}
+
+function History() {
+
+
+  return (
+    <div>
+      H
+    </div>
+  )
+}
+
+const Label = ({ htmlfor, children }: { htmlfor: string, children: ReactNode }) => {
+  return <label htmlFor={htmlfor}>{children}</label>
+}
+
+const Form = ({ action, rest, children }: { action: string, rest: string, children: ReactNode }) => {
+  return <form action={action} method={rest} >{children}</form>
+}
+
+function HistorySection({ Player1, Player2 }: { Player1: IPlayer, Player2: IPlayer }) {
 
   return (
     <div className='history'>
       <h4>Game History</h4>
       <div className='players-container'>
-        <p>Player 1</p>
-        <p>|</p>
-        <p>Player 2</p>
+        <PlayerHBox Player={Player1} />
+        <PlayerHBox Player={Player2} />
       </div>
-      <p>________________________</p>
     </div>
   )
 }
 
 function Board() {
+  const [squares, setSquares] = useState(Array(9).fill(null))
 
-  return (
-    <div className='board'>
-      <ThreeSqRow />
-      <ThreeSqRow />
-      <ThreeSqRow />
-    </div>
-  )
-}
-
-function ThreeSqRow() {
-  return (
-    <div className='board-row'>
-      <Square />
-      <Square />
-      <Square />
-    </div>
-  )
-}
-
-function Square() {
-  const [value, setValue] = useState("");
-  // const [clickCnt, setClickCnt] = useState(0);
-
-  function handleClick() {
-    setValue("X");
+  function handleClick(i: number) {
+    const nextSquares = squares.slice();
+    nextSquares[i] = "X";
+    setSquares(nextSquares);
   }
+
+  const squaresList = squares.map((v, n) => <Square value={v} onSquareClick={() => handleClick(n++)} />)
+
   return (
-    <button type='button' id='btn' className='sq' onClick={handleClick}>
+    <div className='board'>{squaresList}</div>
+  )
+}
+
+function Square({ value, onSquareClick }: { value: string, onSquareClick: () => void }) {
+
+  return (
+    <button type='button' id='btn' className='sq' onClick={onSquareClick}>
       {value}
     </button>
   )
 };
+
+interface ISeparator {
+  mTop: string,
+  mRight: string,
+  mBottom: string,
+  mLeft: string
+}
+
+function Separator({ mTop, mRight, mBottom, mLeft }: ISeparator) {
+
+  return (
+    <span style={{
+      marginTop: mTop,
+      marginRight: mRight,
+      marginBottom: mBottom,
+      marginLeft: mLeft
+    }} ></span>
+  )
+}
